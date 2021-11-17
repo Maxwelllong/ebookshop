@@ -1,16 +1,18 @@
 <!--home-->
 <template>
-  <div>
-    <h3>home</h3>
+  <div id='home'>
+    <van-nav-bar title="ebook" />
   </div>
 </template>
 <script>
 export default {
   name: 'home',
-  data () {
-    return {}
-  },
-  methods: {}
+  setup () {
+    const onClickLeft = () => history.back()
+    return {
+      onClickLeft
+    }
+  }
 }
 </script>
 <style scoped>
