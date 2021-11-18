@@ -1,6 +1,6 @@
 module.exports = {
+  outputDir: 'build',
   configureWebpack: {
-    outputDir: 'build',
     resolve: {
       alias: {
         assets: '@/assets',

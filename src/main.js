@@ -8,7 +8,12 @@ import 'vant/es/button/style'
 import 'vant/lib/index.css'
 import {
   Button,
-  NavBar
+  NavBar,
+  Field,
+  CellGroup,
+  Form
 } from 'vant'
 
-createApp(App).use(store).use(router).use(Button).use(NavBar).mount('#app')
+createApp(App).use(store).use(router)
+  .use(Button).use(NavBar).use(Field).use(CellGroup).use(Form)
+  .mount('#app')
