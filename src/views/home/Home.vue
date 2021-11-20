@@ -1,19 +1,133 @@
 <!--home-->
 <template>
-  <div id='home'>
-    <van-nav-bar title="ebook" />
+  <div id="home">
+    <div class="header">
+      <div class="address"
+           @click="toAddress">
+        <van-icon name="location-o"
+                  size="1.5em"></van-icon>
+        <span>四川省...</span>
+      </div>
+      <div class="searchBar">
+        <div class="search"
+             @click="searchBtn">
+          <van-icon name="search"
+                    size="100%"></van-icon>
+          <span>请输入您要搜索的图书...</span>
+        </div>
+      </div>
+      <div class="scan">
+        <van-icon name="qr"
+                  size="30px"></van-icon>
+      </div>
+    </div>
+    <div class="body">
+      <home-swiper :banner='banner'></home-swiper>
+      <freedom-swiper :freedom='freedom'></freedom-swiper>
+      <tab-change></tab-change>
+    </div>
+    <div class="footer">
+      <van-tabbar v-model="active">
+        <van-tabbar-item icon="wap-home-o">首页</van-tabbar-item>
+        <van-tabbar-item icon="balance-list-o">菜单</van-tabbar-item>
+        <van-tabbar-item icon="cart-o">购物车</van-tabbar-item>
+        <van-tabbar-item icon="user-circle-o">个人中心</van-tabbar-item>
+      </van-tabbar>
+    </div>
   </div>
 </template>
 <script>
+import { onMounted, ref, reactive } from "vue";
+import { useRouter } from 'vue-router'
+import { getIndexData } from "api/home";
+import homeSwiper from './childComps/Swiper.vue'
+import freedomSwiper from './childComps/freedomSwiper.vue'
+import tabChange from './childComps/tabChange.vue'
+
 export default {
-  name: 'home',
+  name: "home",
+  components: {
+    homeSwiper, freedomSwiper, tabChange
+  },
   setup () {
-    const onClickLeft = () => history.back()
+    const router = useRouter()
+    const active = ref("");
+    const banner = ref([])
+    const freedom = ref([])
+    function searchBtn () {
+      router.push('/search')
+    };
+    function toAddress () {
+      router.push('/address')
+    };
+    onMounted(() => {
+      getIndexData().then((res) => {
+        console.log(res);
+        freedom.value = res.data.goods.data
+        console.log(res.data.goods.data);
+        // console.log(freedom.value);
+        banner.value = res.data.slides
+      });
+    });
     return {
-      onClickLeft
+      active, searchBtn, toAddress, banner, freedom
+    };
+  },
+};
+</script>
+<style scoped lang="less">
+.header {
+  height: 45px;
+  background: var(--color-header-background);
+  display: flex;
+  justify-items: center;
+  .address {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    span {
+      font-size: 0.3em;
     }
   }
+  .searchBar {
+    flex: 1;
+    // background: chocolate;
+    line-height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .search {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      padding-left: 10px;
+      border: 1px solid #ccc;
+      height: 70%;
+      border-radius: 50px;
+      span {
+        font-size: 7px;
+      }
+    }
+  }
+  .scan {
+    width: 13%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .my-swipe {
+    color: #fff;
+    font-size: 20px;
+    line-height: 150px;
+    text-align: center;
+    background-color: #39a9ed;
+  }
+  .van-swipe-item {
+    color: #fff;
+    background: chartreuse;
+  }
 }
-</script>
-<style scoped>
 </style>

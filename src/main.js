@@ -11,9 +11,24 @@ import {
   NavBar,
   Field,
   CellGroup,
-  Form
+  Form,
+  Tabbar,
+  TabbarItem,
+  Icon,
+  Search,
+  Area,
+  Swipe,
+  SwipeItem,
+  ConfigProvider,
+  Tab,
+  Tabs
 } from 'vant'
 
+
+
+
+
 createApp(App).use(store).use(router)
-  .use(Button).use(NavBar).use(Field).use(CellGroup).use(Form)
+  .use(Button).use(Icon).use(Swipe).use(Tab).use(Tabs).use(SwipeItem).use(Search).use(Area).use(NavBar).use(Field).use(CellGroup).use(Form).use(Tabbar).use(TabbarItem)
+  .use(ConfigProvider)
   .mount('#app')
