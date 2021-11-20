@@ -49,6 +49,7 @@ export default {
 <style scoped lang='less'>
 .homeSwiper {
   background: var(--color-grayground);
+  padding-top: 45px;
 }
 .swiperStyle {
   width: 100%;

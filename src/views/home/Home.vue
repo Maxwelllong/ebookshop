@@ -22,36 +22,35 @@
       </div>
     </div>
     <div class="body">
+      <!-- tab栏菜单滚动效果 -->
       <home-swiper :banner='banner'></home-swiper>
+      <!-- 左右自由滑动功能 -->
       <freedom-swiper :freedom='freedom'></freedom-swiper>
+      <!-- 图书分栏切换效果 -->
       <tab-change></tab-change>
     </div>
     <div class="footer">
-      <van-tabbar v-model="active">
-        <van-tabbar-item icon="wap-home-o">首页</van-tabbar-item>
-        <van-tabbar-item icon="balance-list-o">菜单</van-tabbar-item>
-        <van-tabbar-item icon="cart-o">购物车</van-tabbar-item>
-        <van-tabbar-item icon="user-circle-o">个人中心</van-tabbar-item>
-      </van-tabbar>
+      <footer-bar></footer-bar>
     </div>
   </div>
 </template>
 <script>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, computed, reactive, watchEffect } from "vue";
 import { useRouter } from 'vue-router'
 import { getIndexData } from "api/home";
 import homeSwiper from './childComps/Swiper.vue'
 import freedomSwiper from './childComps/freedomSwiper.vue'
 import tabChange from './childComps/tabChange.vue'
+import footerBar from '../profile/footerBar.vue'
+
 
 export default {
   name: "home",
   components: {
-    homeSwiper, freedomSwiper, tabChange
+    homeSwiper, freedomSwiper, tabChange, footerBar
   },
   setup () {
     const router = useRouter()
-    const active = ref("");
     const banner = ref([])
     const freedom = ref([])
     function searchBtn () {
@@ -60,23 +59,26 @@ export default {
     function toAddress () {
       router.push('/address')
     };
+
     onMounted(() => {
       getIndexData().then((res) => {
-        console.log(res);
+        // console.log(res);
         freedom.value = res.data.goods.data
-        console.log(res.data.goods.data);
-        // console.log(freedom.value);
         banner.value = res.data.slides
       });
+
     });
     return {
-      active, searchBtn, toAddress, banner, freedom
+      searchBtn, toAddress, banner, freedom
     };
   },
 };
 </script>
 <style scoped lang="less">
 .header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
   height: 45px;
   background: var(--color-header-background);
   display: flex;

@@ -8,10 +8,12 @@ function getIndexData() {
   })
 }
 
-function getBanner() {
-
+function getGoods(type = 'sale', page = 1) {
+  return request({
+    url: "/api/index?" + type + "=1&page=" + page,
+  })
 }
 export {
   getIndexData,
-  getBanner
+  getGoods
 }
