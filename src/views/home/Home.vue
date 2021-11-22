@@ -30,24 +30,21 @@
       <tab-change></tab-change>
     </div>
     <div class="footer">
-      <footer-bar></footer-bar>
     </div>
   </div>
 </template>
 <script>
-import { onMounted, ref, computed, reactive, watchEffect } from "vue";
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getIndexData } from "api/home";
+import { getIndexData } from 'api/home'
 import homeSwiper from './childComps/Swiper.vue'
 import freedomSwiper from './childComps/freedomSwiper.vue'
 import tabChange from './childComps/tabChange.vue'
-import footerBar from '../profile/footerBar.vue'
-
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
-    homeSwiper, freedomSwiper, tabChange, footerBar
+    homeSwiper, freedomSwiper, tabChange
   },
   setup () {
     const router = useRouter()
@@ -65,14 +62,13 @@ export default {
         // console.log(res);
         freedom.value = res.data.goods.data
         banner.value = res.data.slides
-      });
-
-    });
+      })
+    })
     return {
       searchBtn, toAddress, banner, freedom
-    };
-  },
-};
+    }
+  }
+}
 </script>
 <style scoped lang="less">
 .header {

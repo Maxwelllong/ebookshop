@@ -5,34 +5,40 @@
                indicator='#ccc'
                lazy-render>
       <van-swipe-item v-for="item in banner"
-                      :key="item.id">
+                      :key="item.id"
+                      @click="itemClick(item.id)">
         <img class='imgStyle'
-             :src="item.img_url" />
+             v-lazy="item.img_url" />
       </van-swipe-item>
     </van-swipe>
   </div>
 </template>
 
 <script>
-import { reactive, ref, toRefs, onBeforeMount, onMounted } from 'vue'
+import { reactive, toRefs, onBeforeMount, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   name: 'homeSwiper',
   props: {
-    //接收来自父组件的数据
-    banner: Array,
+    // 接收来自父组件的数据
+    banner: Array
   },
   setup () {
-    //'1-开始创建组件-setup'
+    // '1-开始创建组件-setup'
     const data = reactive({
 
     })
+    const router = useRouter()
+    const itemClick = (id) => {
+      router.push({ path: '/detail', query: { id: id } })
+    }
     onBeforeMount(() => {
-      //'2.组件挂载页面之前执行----onBeforeMount'
+      // '2.组件挂载页面之前执行----onBeforeMount'
     })
     onMounted(() => {
-      //'3.-组件挂载到页面之后执行-------onMounted'
+      // '3.-组件挂载到页面之后执行-------onMounted'
     })
-    //修改轮播图样式
+    // 修改轮播图样式
     const themeVars = {
       SwipeIndicatorsWidth: 20,
       SwipeIndicatorsOpacity: 1,
@@ -40,9 +46,10 @@ export default {
     }
     return {
       ...toRefs(data),
-      themeVars
+      themeVars,
+      itemClick
     }
-  },
+  }
 }
 
 </script>

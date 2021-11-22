@@ -2,11 +2,17 @@
 <template>
   <div id='App'>
     <router-view />
+    <tab-bar></tab-bar>
+
   </div>
 </template>
 <script>
+import tabBar from './views/profile/footerBar.vue'
 export default {
   name: 'App',
+  components: {
+    tabBar
+  },
   data () {
     return {}
   },

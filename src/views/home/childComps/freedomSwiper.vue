@@ -7,7 +7,8 @@
       <van-swipe-item v-for="item in freedom"
                       :key="item.id">
         <div class='swiperCon'>
-          <a href="javascript:;">
+          <a href="javascript:;"
+             @click="itemClick(item.id)">
             <img :src="item.cover_url"
                  :alt="item.description">
             <p>{{item.title}}</p>
@@ -21,8 +22,10 @@
 
 <script>
 import { reactive, toRefs, onBeforeMount, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
-  name: '',
+  name: 'freedomSwiper',
+
   props: {
     freedom: {
       type: Array,
@@ -32,18 +35,22 @@ export default {
     }
   },
   setup () {
-    //'1-开始创建组件-setup'
+    // '1-开始创建组件-setup'
     const data = reactive({})
+    const router = useRouter()
+    const itemClick = (id) => {
+      router.push({ path: '/detail', query: { id: id } })
+    }
     onBeforeMount(() => {
-      //'2.组件挂载页面之前执行----onBeforeMount'
+      // '2.组件挂载页面之前执行----onBeforeMount'
     })
     onMounted(() => {
-      //'3.-组件挂载到页面之后执行-------onMounted'
+      // '3.-组件挂载到页面之后执行-------onMounted'
     })
     return {
-      ...toRefs(data),
+      ...toRefs(data), router, itemClick
     }
-  },
+  }
 }
 
 </script>

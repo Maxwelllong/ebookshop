@@ -9,6 +9,7 @@ const Address = () => import('../views/profile/Address.vue')
 const menuItem = () => import('../views/menu/mainItem.vue')
 const shopCart = () => import('../views/Cart/shopCart.vue')
 const userInfo = () => import('../views/user/user.vue')
+const Detail = () => import('../views/detail/Detail.vue')
 
 const routes = [{
     path: '/',
@@ -16,33 +17,38 @@ const routes = [{
   }, {
     path: '/index',
     name: 'Home',
-    component: Home,
-    children: [{
-      path: '/menu',
-      name: 'Menu',
-      component: menuItem
-    }, {
-      path: '/cart',
-      name: 'shopCart',
-      component: shopCart
-    }, {
-      path: '/user',
-      name: 'userInfo',
-      component: userInfo
-    }]
+    component: Home
+  },
+  {
+    path: '/menu',
+    name: 'Menu',
+    component: menuItem
   }, {
+    path: '/cart',
+    name: 'shopCart',
+    component: shopCart
+  }, {
+    path: '/user',
+    name: 'userInfo',
+    component: userInfo
+  },
+  {
     path: '/reg',
     name: 'register',
     component: Register
   }, {
     path: '/search',
-    name: "search",
+    name: 'search',
     component: Search
   }, {
     path: '/address',
     name: 'Address',
     component: Address
-  },
+  }, {
+    path: '/detail',
+    name: 'goodsDetail',
+    component: Detail
+  }
 
 ]
 
