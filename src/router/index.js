@@ -17,37 +17,61 @@ const routes = [{
   }, {
     path: '/index',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      isShow: true // 需要显示 底部导航
+    }
   },
   {
     path: '/menu',
     name: 'Menu',
-    component: menuItem
+    component: menuItem,
+    meta: {
+      isShow: true
+    }
   }, {
     path: '/cart',
     name: 'shopCart',
-    component: shopCart
+    component: shopCart,
+    meat: {
+      isShow: true
+    }
   }, {
     path: '/user',
     name: 'userInfo',
-    component: userInfo
+    component: userInfo,
+    meta: {
+      isShow: true
+    }
   },
   {
     path: '/reg',
     name: 'register',
-    component: Register
+    component: Register,
+    meta: {
+      isShow: false
+    }
   }, {
     path: '/search',
     name: 'search',
-    component: Search
+    component: Search,
+    meta: {
+      isShow: false
+    }
   }, {
     path: '/address',
     name: 'Address',
-    component: Address
+    component: Address,
+    meta: {
+      isShow: false
+    }
   }, {
     path: '/detail',
     name: 'goodsDetail',
-    component: Detail
+    component: Detail,
+    meta: {
+      isShow: false
+    }
   }
 
 ]

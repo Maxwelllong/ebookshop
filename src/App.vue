@@ -2,8 +2,7 @@
 <template>
   <div id='App'>
     <router-view />
-    <tab-bar></tab-bar>
-
+    <tab-bar v-if='$route.meta.isShow'></tab-bar>
   </div>
 </template>
 <script>
