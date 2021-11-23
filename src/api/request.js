@@ -1,4 +1,7 @@
 import axios from 'axios'
+import {
+  Toast
+} from 'vant'
 
 export function request(config) {
   const instance = axios.create({
@@ -19,7 +22,9 @@ export function request(config) {
     return res
   }, err => {
     // 如果有错误需要处理在这统一进行处理,根据状态码进行处理
-    console.log(err)
+    if (err.statue === 422) {
+      Toast('失败')
+    }
   })
   return instance(config)
 }

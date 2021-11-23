@@ -10,6 +10,7 @@ const menuItem = () => import('../views/menu/mainItem.vue')
 const shopCart = () => import('../views/Cart/shopCart.vue')
 const userInfo = () => import('../views/user/user.vue')
 const Detail = () => import('../views/detail/Detail.vue')
+const Login = () => import('../views/user/login.vue')
 
 const routes = [{
     path: '/',
@@ -52,6 +53,14 @@ const routes = [{
       isShow: false
     }
   }, {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      isShow: false
+    }
+  },
+  {
     path: '/search',
     name: 'search',
     component: Search,
