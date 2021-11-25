@@ -11,11 +11,15 @@ export default {
   name: 'App',
   components: {
     tabBar
-  },
-  data () {
-    return {}
-  },
-  methods: {}
+  }
+  // setup () {
+  //   const getInfo = () => {
+  //     console.log($route.meta.isShow)
+  //   }
+  //   return {
+  //     getInfo
+  //   }
+  // }
 }
 </script>
 <style scoped>

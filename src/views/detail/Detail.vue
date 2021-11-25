@@ -29,6 +29,12 @@
                     @click="goToCart">立即购买</van-button>
       </template>
     </van-card>
+    <!-- 立即购买弹出框 -->
+    <van-popup v-model:show="isShow"
+               position="bottom"
+               :style="{ height: '45%' }">
+      <h4>商品分类信息</h4>
+    </van-popup>
     <!-- 标签 -->
     <van-tabs v-model:active="active"
               offset-top='45px'
@@ -52,8 +58,10 @@
 <script>
 import { ref, onMounted, reactive, computed, WatchEffect, nextTick, toRefs } from 'vue'
 import { getDetail } from '../../api/detail.js'
+import { addCart } from 'api/cart.js'
 import GoodsList from '@/components/goodsList'
 import { useRoute, useRouter } from 'vue-router'
+import { Toast, Notify } from 'vant'
 
 export default {
   name: 'Detail',
@@ -63,6 +71,7 @@ export default {
   setup () {
     const route = useRoute()
     const Id = ref(0)
+    const isShow = ref(false)
     const router = useRouter()
     const Books = reactive({
       detail: {},
@@ -75,22 +84,33 @@ export default {
     // 添加购物车
     const handleAddCart = () => {
       console.log('添加购物车')
+      const isToken = window.sessionStorage.getItem('token')
+      if (!isToken) {
+        Notify('您没有登录，请登录')
+        router.push('/login')
+      }
+      addCart({ goods_id: Books.detail.id, num: 1 }).then(res => {
+        console.log(res)
+        if (res.status === 201 || res.status === 204) {
+          Toast.success({ message: '添加成功', position: 'top' })
+        }
+      })
     }
     // 立即购买
     const goToCart = () => {
       console.log('立即购买')
+      isShow.value = true
     }
     onMounted(() => {
       Id.value = route.query.id
       getDetail(Id.value).then(res => {
-        console.log(res)
         Books.detail = res.data.goods
         Books.like_goods = res.data.like_goods
         Books.comments = res.data.comments
       })
     })
     return {
-      Id, ...toRefs(Books), onClickLeft, handleAddCart, goToCart
+      Id, ...toRefs(Books), onClickLeft, handleAddCart, goToCart, isShow
     }
   }
 }

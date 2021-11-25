@@ -140,6 +140,11 @@ export default {
         setTimeout(() => {
           router.push({ path: '/login' })
         }, 1000)
+        // 清空注册信息
+        userInfo.name = '',
+          userInfo.password = '',
+          userInfo.password_confirmation = '',
+          userInfo.email = ''
       }).catch(err => {
         Toast.fail('注册失败')
         console.log(err)

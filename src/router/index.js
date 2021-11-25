@@ -1,7 +1,11 @@
 import {
+  Notify
+} from 'vant'
+import {
   createRouter,
   createWebHistory
 } from 'vue-router'
+
 import Home from '../views/home/Home.vue'
 const Register = () => import('../views/user/register.vue')
 const Search = () => import('../views/profile/search.vue')
@@ -34,15 +38,19 @@ const routes = [{
     path: '/cart',
     name: 'shopCart',
     component: shopCart,
-    meat: {
-      isShow: true
+    meta: {
+      title: '购物车',
+      isShow: true,
+      isAuthRequired: true // 授权才能访问
     }
   }, {
     path: '/user',
     name: 'userInfo',
     component: userInfo,
     meta: {
-      isShow: true
+      title: '用户详情',
+      isShow: true,
+      isAuthRequired: true // 授权才能访问
     }
   },
   {
@@ -90,4 +98,22 @@ const router = createRouter({
   routes
 })
 
-export default router
+router.beforeEach((to, from, next) => {
+  // 判断原元素中的isAuthRequired 和 user下面的isLogin状态是否为false
+  const isToken = !!window.sessionStorage.getItem('token')
+  console.log(isToken)
+  if (to.path !== '/cart') {
+    next()
+  } else {
+    if (!isToken && !to.meta.isAuthRequired) {
+      Notify('您还没有登录，请登录后重试！')
+      return next('/login')
+    } else {
+      return next()
+    }
+  }
+})
+
+export default {
+  ...router
+}

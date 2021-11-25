@@ -14,11 +14,11 @@
               show-error
               show-error-message
               label-width='0'>
-      <van-field v-model="username"
+      <van-field v-model="user.email"
                  name="用户名"
                  placeholder="邮箱地址"
                  :rules="[{ required: true, message: '请填写用户名' }]" />
-      <van-field v-model="password"
+      <van-field v-model="user.password"
                  type="password"
                  name="密码"
                  placeholder="密码"
@@ -34,19 +34,40 @@
 </template>
 
 <script>
-import { reactive, toRefs, onBeforeMount, onMounted } from 'vue'
+import { reactive, onBeforeMount, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { submitLogin } from 'api/user.js'
+import { Toast } from 'vant'
 export default {
   name: 'Login',
   setup () {
     // '1-开始创建组件-setup'
-    const data = reactive({})
     const router = useRouter()
+    const user = reactive({
+      email: 'as@as.com',
+      password: 'Lixiaoyan123'
+    })
     const onClickLeft = () => {
       router.push('/')
     }
     const onClickRight = () => {
       router.push('/reg')
+    }
+    // 提交登录
+    const onSubmit = () => {
+      submitLogin(user).then(res => {
+        console.log(res)
+        if (res.status === 200) {
+          Toast.success('登录成功')
+          window.sessionStorage.setItem('token', res.data.access_token)
+          setTimeout(() => {
+            router.push('/')
+          }, 1000)
+          // 登录成功，清空表单
+          user.email = '',
+            user.password = ''
+        }
+      })
     }
     onBeforeMount(() => {
       // '2.组件挂载页面之前执行----onBeforeMount'
@@ -55,7 +76,7 @@ export default {
       // '3.-组件挂载到页面之后执行-------onMounted'
     })
     return {
-      ...toRefs(data), onClickRight, onClickLeft
+      onClickRight, onClickLeft, onSubmit, user
     }
   }
 }
@@ -63,16 +84,31 @@ export default {
 </script>
 <style scoped lang='less'>
 .loginStyle {
-  background: rgb(218, 118, 118) !important;
+  background: url(~assets/img/loginBg.jpg) no-repeat;
   height: 100vh;
 }
 /deep/.van-form {
-  margin-top: 50%;
+  margin-top: 60%;
   transform: translateY(-50%);
   padding: 2rem;
 }
-/deep/ .van-field {
-  border-radius: 3rem;
-  margin-bottom: 1rem;
+/deep/.van-field {
+  background: rgba(0, 0, 0, 0);
+}
+/deep/.van-cell::after {
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+/deep/ .van-field__control {
+  background: rgba(9, 9, 9, 0.5);
+  color: white;
+  border-radius: 20px;
+  padding: 5px 0 5px 10px;
+}
+/deep/.van-field__error-message {
+  margin-left: 10px;
+}
+/deep/.van-button {
+  border: none;
+  opacity: 0.5;
 }
 </style>
