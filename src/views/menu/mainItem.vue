@@ -1,11 +1,9 @@
 <template>
   <div>
-    <van-nav-bar title="菜单">
-    </van-nav-bar>
+    <van-nav-bar title="菜单"> </van-nav-bar>
     <div class="main">
       <div class="orderTab">
-        <van-tabs v-model="currentTag"
-                  @click="tabClick">
+        <van-tabs v-model="currentTag" @click="tabClick">
           <van-tab title="销量排序"></van-tab>
           <van-tab title="价格排序"></van-tab>
           <van-tab title="评论排序"></van-tab>
@@ -13,42 +11,54 @@
       </div>
       <div class="leftMenu">
         <van-sidebar v-model="active">
-          <van-collapse v-model="activeName"
-                        size='small'
-                        accordion>
-            <van-collapse-item :title="items.name"
-                               v-for="items in leftList"
-                               :key="items.id">
-              <van-sidebar-item v-for="item in items.children"
-                                :key="item.index"
-                                :title="item.name"
-                                @click="getGoods(item.id)"></van-sidebar-item>
+          <van-collapse v-model="activeName" size="small" accordion>
+            <van-collapse-item
+              :title="items.name"
+              v-for="items in leftList"
+              :key="items.id"
+            >
+              <van-sidebar-item
+                v-for="item in items.children"
+                :key="item.index"
+                :title="item.name"
+                @click="getGoods(item.id)"
+              ></van-sidebar-item>
             </van-collapse-item>
           </van-collapse>
         </van-sidebar>
       </div>
       <div class="goodsList">
         <div class="content">
-          <van-card v-for="items in showGoods"
-                    :key="items.id"
-                    :num="items.comments_count"
-                    :tag="items.comments_count >= 0 ? '流行' : '标签'"
-                    :price="items.price"
-                    :desc="items.updated_at"
-                    :title="items.title"
-                    :thumb="items.cover_url"
-                    @click="itemDetail(items.id)"
-                    :lazy-load='true' />
+          <van-card
+            v-for="items in showGoods"
+            :key="items.id"
+            :num="items.comments_count"
+            :tag="items.comments_count >= 0 ? '流行' : '标签'"
+            :price="items.price"
+            :desc="items.updated_at"
+            :title="items.title"
+            :thumb="items.cover_url"
+            @click="itemDetail(items.id)"
+            :lazy-load="true"
+          />
         </div>
       </div>
     </div>
-    <back-top @bTop='bTop'
-              v-show="isShowBackTop"></back-top>
+    <back-top @bTop="bTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
 <script>
-import { reactive, ref, toRefs, computed, onBeforeMount, onMounted, nextTick, watchEffect } from 'vue'
+import {
+  reactive,
+  ref,
+  toRefs,
+  computed,
+  onBeforeMount,
+  onMounted,
+  nextTick,
+  watchEffect
+} from 'vue'
 import { getLeftMenu, getConData } from 'api/menu.js'
 import backTop from 'components/backTop.vue'
 import BScroll from 'better-scroll'
@@ -86,20 +96,20 @@ export default {
       return goods[currentOrder.value].list
     })
     const init = () => {
-      getConData('sales', currentTag.value).then(res => {
+      getConData('sales', currentTag.value).then((res) => {
         goods.sales.list = res.data.goods.data
       })
-      getConData('price', currentTag.value).then(res => {
+      getConData('price', currentTag.value).then((res) => {
         goods.price.list = res.data.goods.data
       })
-      getConData('comments_count', currentTag.value).then(res => {
+      getConData('comments_count', currentTag.value).then((res) => {
         goods.comments_count.list = res.data.goods.data
       })
     }
-    const tabClick = function(index) {
+    const tabClick = function (index) {
       const orders = ['sales', 'price', 'comments_count']
       currentOrder.value = orders[index]
-      getConData(orders[index], currentTag.value).then(res => {
+      getConData(orders[index], currentTag.value).then((res) => {
         goods[currentOrder.value].list = res.data.goods.data
       })
     }
@@ -108,7 +118,7 @@ export default {
     })
     onMounted(() => {
       // '3.-组件挂载到页面之后执行-------onMounted'
-      getLeftMenu().then(res => {
+      getLeftMenu().then((res) => {
         console.log(res)
         leftList.value = res.data.categories
       })
@@ -118,11 +128,11 @@ export default {
         click: true, // 是否允许点击
         pullUpLoad: true // 上拉加载更多，默认 false
       })
-      bscroll.on('scroll', position => {
+      bscroll.on('scroll', (position) => {
         isShowBackTop.value = -position.y > 300
       })
       bscroll.on('pullingUp', () => {
-        getConData(currentOrder.value, currentTag.value).then(res => {
+        getConData(currentOrder.value, currentTag.value).then((res) => {
           goods[currentOrder.value].list.push(...res.data.goods.data)
           goods[currentOrder.value].page += 1
         })
@@ -165,9 +175,8 @@ export default {
     }
   }
 }
-
 </script>
-<style scoped lang='less'>
+<style scoped lang="less">
 .main {
   position: relative;
 }
