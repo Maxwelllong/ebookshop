@@ -15,6 +15,12 @@ const shopCart = () => import('../views/Cart/shopCart.vue')
 const userInfo = () => import('../views/user/user.vue')
 const Detail = () => import('../views/detail/Detail.vue')
 const Login = () => import('../views/user/login.vue')
+const Orders = () => import('../views/order/order.vue')
+const Collection = () => import('../views/user/collection.vue')
+const myOrder = () => import('../views/user/Order.vue')
+const Setting = () => import('../views/user/Setting.vue')
+const myAddress = () => import('../views/user/Address.vue')
+const aboutUs = () => import('../views/user/aboutUs.vue')
 
 const routes = [{
     path: '/',
@@ -89,6 +95,55 @@ const routes = [{
     meta: {
       isShow: false
     }
+  }, {
+    path: '/createorder',
+    name: 'orders',
+    component: Orders,
+    meta: {
+      isShow: false
+    }
+  }, {
+    path: '/collection',
+    name: 'Collection',
+    component: Collection,
+    meta: {
+      isShow: false
+    }
+  }, {
+    path: '/order',
+    name: 'Myoder',
+    component: myOrder,
+    meta: {
+      isShow: false
+    }
+  }, {
+    path: '/setting',
+    name: 'Setting',
+    component: Setting,
+    meta: {
+      isShow: false
+    }
+  }, {
+    path: '/myAddress',
+    name: 'myAddress',
+    component: myAddress,
+    meta: {
+      isShow: false
+    }
+  }, {
+    path: '/myAddress/edit',
+    name: 'Edit',
+    component: () => import('../views/user/editAddress.vue'),
+    meta: {
+      isShow: false
+    }
+  }, {
+    path: '/aboutUs',
+    name: 'aboutus',
+    component: aboutUs,
+    meta: {
+      isShow: false
+    }
   }
 
 ]
@@ -101,8 +156,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 判断原元素中的isAuthRequired 和 user下面的isLogin状态是否为false
   const isToken = !!window.sessionStorage.getItem('token')
-  console.log(isToken)
-  if (to.path !== '/cart') {
+  if (to.path === '/login' || to.path === '/reg') {
     next()
   } else {
     if (!isToken && !to.meta.isAuthRequired) {

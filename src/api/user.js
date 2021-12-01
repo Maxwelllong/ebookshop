@@ -24,8 +24,23 @@ function logout() {
     method: 'POST'
   })
 }
+// 得到用户信息
+function getUser() {
+  return request({
+    url: '/api/user',
+    method: 'GET'
+  })
+}
+// 收藏信息
+function getCollction() {
+  return request({
+    url: '/api/collects'
+  })
+}
 export {
   submitInfo,
   submitLogin,
-  logout
+  logout,
+  getUser,
+  getCollction
 }

@@ -1,5 +1,5 @@
+// 给路径起别名
 module.exports = {
-  outputDir: 'build',
   configureWebpack: {
     resolve: {
       alias: {
@@ -11,5 +11,6 @@ module.exports = {
       }
     }
   },
-  lintOnSave: false
+  publicPath: './',
+  lintOnSave: true
 }

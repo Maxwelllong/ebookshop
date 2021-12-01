@@ -10,11 +10,11 @@ function addCart(data) {
     data
   })
 }
-// 修改购物车
+// 修改购物车数量
 function editCart(id, data) {
   return request({
     url: `/api/carts/${id}`,
-    method: 'put',
+    method: 'PUT',
     data
   })
 }
@@ -22,7 +22,7 @@ function editCart(id, data) {
 function selectCart(data) {
   return request({
     url: '/api/carts/checked',
-    method: 'patch',
+    method: 'PATCH',
     data
   })
 }

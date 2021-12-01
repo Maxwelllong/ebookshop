@@ -38,10 +38,13 @@ import {
   Stepper,
   SwipeCell,
   Cell,
-  CheckboxGroup
+  CheckboxGroup,
+  ShareSheet,
+  AddressEdit,
+  AddressList
 } from 'vant'
 
 createApp(App).use(store).use(router)
   .use(Button).use(Cell).use(CheckboxGroup).use(SwipeCell).use(Icon).use(Collapse).use(CollapseItem).use(Lazyload).use(Swipe).use(Tab).use(Tabs).use(SwipeItem).use(Search).use(Area).use(NavBar).use(Field).use(CellGroup).use(Form).use(Tabbar).use(TabbarItem)
-  .use(ConfigProvider).use(Stepper).use(Checkbox).use(Radio).use(SubmitBar).use(Popup).use(Toast).use(Tag).use(Sidebar).use(SidebarItem).use(Card).use(VanImage)
+  .use(ConfigProvider).use(AddressEdit).use(AddressList).use(ShareSheet).use(Stepper).use(Checkbox).use(Radio).use(SubmitBar).use(Popup).use(Toast).use(Tag).use(Sidebar).use(SidebarItem).use(Card).use(VanImage)
   .mount('#app')

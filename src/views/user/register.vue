@@ -1,52 +1,73 @@
 <template>
   <div>
-    <van-nav-bar title="用户注册"
-                 left-text="登录"
-                 left-arrow
-                 @click-left="onClickLeft" />
+    <van-nav-bar
+      title="用户注册"
+      left-text="登录"
+      left-arrow
+      @click-left="onClickLeft"
+    />
     <div class="body">
-      <van-form @submit='onSubmit'>
-        <van-image width="100"
-                   class='headLogo'
-                   round
-                   height="100"
-                   src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+      <van-form @submit="onSubmit">
+        <van-image
+          width="100"
+          class="headLogo"
+          round
+          height="100"
+          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+        />
         <van-cell-group inset>
           <!-- 校验用户名 -->
-          <van-field v-model="userInfo.name"
-                     validate-first
-                     submit-on-enter
-                     show-error-message
-                     clearable
-                     show-error
-                     width='200px'
-                     name="pattern"
-                     placeholder="请输入用户名，长度6-12位"
-                     :rules="[{ validator:validatorUserName,required:true, message: '用户名不能为空' }]" />
+          <van-field
+            v-model="userInfo.name"
+            validate-first
+            submit-on-enter
+            show-error-message
+            clearable
+            show-error
+            width="200px"
+            name="pattern"
+            placeholder="请输入用户名，长度4-12位"
+            :rules="[
+              {
+                validator: validatorUserName,
+                required: true,
+                message: '用户名不能为空'
+              }
+            ]"
+          />
           <!-- 通过 validator 进行密码校验 -->
-          <van-field v-model="userInfo.password"
-                     name="validator"
-                     clearable
-                     placeholder="密码"
-                     :rules="[{  validator:validatorPwd,required:true, message: '密码不能为空' }]" />
+          <van-field
+            v-model="userInfo.password"
+            name="validator"
+            clearable
+            placeholder="密码"
+            :rules="[
+              {
+                validator: validatorPwd,
+                required: true,
+                message: '密码不能为空'
+              }
+            ]"
+          />
           <!-- 确认密码 -->
-          <van-field v-model="userInfo.password_confirmation"
-                     name="password_confirmation"
-                     clearable
-                     placeholder="确认密码"
-                     :rules="[{ validator: checkPwd }]" />
+          <van-field
+            v-model="userInfo.password_confirmation"
+            name="password_confirmation"
+            clearable
+            placeholder="确认密码"
+            :rules="[{ validator: checkPwd }]"
+          />
           <!-- 检查邮箱改地址 -->
-          <van-field v-model="userInfo.email"
-                     clearable
-                     name="Email"
-                     placeholder="请输入邮箱地址"
-                     :rules="[{ validator: checkEmail, message: '请输入邮箱地址' }]" />
+          <van-field
+            v-model="userInfo.email"
+            clearable
+            name="Email"
+            placeholder="请输入邮箱地址"
+            :rules="[{ validator: checkEmail, message: '请输入邮箱地址' }]"
+          />
         </van-cell-group>
-        <div style="margin: 16px;">
-          <van-button round
-                      block
-                      type="primary"
-                      native-type="submit">
+        <div style="margin: 16px">
+          <van-button round block type="primary" native-type="submit">
             提交
           </van-button>
         </div>
@@ -65,9 +86,9 @@ export default {
   setup () {
     // '1-开始创建组件-setup'
     const userInfo = reactive({
-      name: 'thomasLi',
-      password: 'Lixiaoyan123',
-      password_confirmation: 'Lixiaoyan123',
+      name: 'admin',
+      password: '123456',
+      password_confirmation: '123456',
       email: 'as@as.com'
     })
     const router = useRouter()
@@ -78,7 +99,7 @@ export default {
     // 校验用户名(^[a-zA-Z]{1}[a-zA-Z\s]{0,20}[a-zA-Z]{1}$)/ James Kevin Wayne Durant Dirk Nowitzki
     // const regName = ref(/(^[a-zA-Z]{1}[a-zA-Z\s]{0,20}[a-zA-Z]{1}$)/)
     // 英文姓名
-    const regName = /^[a-zA-Z]{1}[a-zA-Z\s]{4,10}[a-zA-Z]{1}$/
+    const regName = /^[a-zA-Z]{1}[a-zA-Z0-9\s]{2,10}[a-zA-Z0-9]{1}$/
     const validatorUserName = (val) => {
       if (regName.test(val)) {
         return true
@@ -121,7 +142,8 @@ export default {
       // 例子
       // 90203918@qq.com
       // nbilly@126.com
-      const regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+      const regEmail =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
       if (!val) {
         return '邮箱地址不能为空'
       } else if (regEmail.test(val)) {
@@ -133,22 +155,26 @@ export default {
     // 提交表单
     const onSubmit = () => {
       // console.log(userInfo)
-      submitInfo(userInfo).then(res => {
-        // const routers = router
-        Toast.success('注册成功')
-        // 注册成功后1秒钟跳转
-        setTimeout(() => {
-          router.push({ path: '/login' })
-        }, 1000)
-        // 清空注册信息
-        userInfo.name = '',
-          userInfo.password = '',
-          userInfo.password_confirmation = '',
-          userInfo.email = ''
-      }).catch(err => {
-        Toast.fail('注册失败')
-        console.log(err)
-      })
+      submitInfo(userInfo)
+        .then(
+          (res) => {
+            // const routers = router
+            Toast.success('注册成功')
+            // 注册成功后1秒钟跳转
+            setTimeout(() => {
+              router.push({ path: '/login' })
+            }, 1000)
+          },
+          // 清空注册表信息
+          (userInfo.name = ''),
+          (userInfo.password = ''),
+          (userInfo.password_confirmation = ''),
+          (userInfo.email = '')
+        )
+        .catch((err) => {
+          Toast.fail('注册失败')
+          console.log(err)
+        })
     }
     onBeforeMount(() => {
       // '2.组件挂载页面之前执行----onBeforeMount'
@@ -168,9 +194,8 @@ export default {
     }
   }
 }
-
 </script>
-<style scoped lang='less'>
+<style scoped lang="less">
 /deep/.van-form {
   margin-top: 10%;
   display: flex;
