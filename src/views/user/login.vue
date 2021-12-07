@@ -40,7 +40,7 @@
       </van-form>
       <hr />
       <!-- 第三方登陆 -->
-      <div class="otherLogin">
+      <div class="otherLogin" @click="loginWays">
         <van-button class="btnItem"
           ><van-icon name="wechat" size="20px" />
           <div class="ways">微信登陆</div></van-button
@@ -72,6 +72,7 @@ export default {
       email: '',
       password: ''
     })
+    const oauth = reactive({})
     const onClickLeft = () => {
       router.push('/')
     }
@@ -96,6 +97,17 @@ export default {
         }
       })
     }
+    // 第三方登陆方式
+    const loginWays = () => {
+      plus.oauth.getServices(
+        (data) => {
+          console.log(JSON.stringify(data))
+        },
+        () => {
+          Toast.fail('登陆失败')
+        }
+      )
+    }
     onBeforeMount(() => {
       // '2.组件挂载页面之前执行----onBeforeMount'
     })
@@ -106,7 +118,9 @@ export default {
       onClickRight,
       onClickLeft,
       onSubmit,
-      user
+      user,
+      oauth,
+      loginWays
     }
   }
 }
